@@ -4,7 +4,6 @@ import { validate, ValidationError } from 'class-validator';
 import { request, summary, body, responsesAll, tagsAll, path } from 'koa-swagger-decorator';
 import { Wallet, walletSchema } from '../entity/wallet';
 import { Currency } from '../entity/currency';
-import getBalanceByAddress from '../crons/balance';
 
 @responsesAll({ 200: { description: 'success' }, 400: { description: 'bad request' } })
 
@@ -16,8 +15,6 @@ export default class UserController {
   public static async getWallets(ctx: BaseContext): Promise<void> {
     const walletRepository: Repository<Wallet> = getManager().getRepository(Wallet);
     const wallets: Wallet[] = await walletRepository.find();
-
-    getBalanceByAddress();
 
     ctx.status = 200;
     ctx.body = wallets;
@@ -40,7 +37,6 @@ export default class UserController {
       return;
     }
     wallet.currency = currency.token;
-    wallet.balance = ctx.request.body.balance;
 
     const errors: ValidationError[] = await validate(wallet);
 

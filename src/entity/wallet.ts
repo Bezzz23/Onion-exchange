@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 import { Length, IsNumber } from 'class-validator';
 import { Currency } from './currency';
+// import { currency } from 'src/controller';
 @Entity()
 export class Wallet {
   @PrimaryGeneratedColumn()
@@ -16,18 +17,18 @@ export class Wallet {
     length: 100
   })
 
-  @OneToOne(() => Currency)
-  @JoinColumn()
+  // @ManyToOne(() => Currency, currency => currency.token)
+  // @JoinColumn()
+  @Column()
   currency: string
 
-  @Column()
-  @IsNumber()
+  @Column('float', { default: 0 })
   balance: number;
 }
 
 export const walletSchema = {
   id: { type: 'number', required: true, example: 1 },
-  address: { type: 'string', required: true, example: 2 },
-  currency: { type: 'string', required: true, example: 'etheriumfdsafdsaf' },
+  address: { type: 'string', required: true, example: '0xaae47eae4ddd4877e0ae0bc780cfaee3cc3b52cb' },
+  currency: { type: 'string', required: true, example: 1 },
   balance: { type: 'number', required: false, example: 8 }
 };

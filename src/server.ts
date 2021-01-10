@@ -10,7 +10,7 @@ import { logger } from './logger';
 import { config } from './config';
 import routes from './routes';
 
-import { cron } from './cron';
+import { cron } from './crons/cron';
 
 createConnection({
   type: 'postgres',
