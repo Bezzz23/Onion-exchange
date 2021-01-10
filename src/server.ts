@@ -17,7 +17,8 @@ createConnection({
   url: config.databaseUrl,
   synchronize: true,
   logging: false,
-  entities: config.dbEntitiesPath
+  entities: config.dbEntitiesPath,
+  migrations: ['migration/*.ts'],
 }).then(async () => {
 
   const app = new Koa();

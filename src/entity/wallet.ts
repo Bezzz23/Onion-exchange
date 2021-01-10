@@ -1,27 +1,33 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { Length, IsDecimal, IsEthereumAddress } from 'class-validator';
-
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
+import { Length, IsNumber } from 'class-validator';
+import { Currency } from './currency';
 @Entity()
 export class Wallet {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsEthereumAddress()
+  @Column()
   address: string;
+
+  @Column('boolean', { default: false })
+  archived: boolean;
 
   @Column({
     length: 100
   })
-  @Length(10, 100)
-  currency: string;
+
+  @OneToOne(() => Currency)
+  @JoinColumn()
+  currency: string
 
   @Column()
-  @IsDecimal()
+  @IsNumber()
   balance: number;
 }
 
 export const walletSchema = {
   id: { type: 'number', required: true, example: 1 },
-  address: { type: 'number', required: true, example: 2 },
-  currency: { type: 'string', required: true, example: 'avileslopez.javier@gmail.com' }
+  address: { type: 'string', required: true, example: 2 },
+  currency: { type: 'string', required: true, example: 'etheriumfdsafdsaf' },
+  balance: { type: 'number', required: false, example: 8 }
 };
