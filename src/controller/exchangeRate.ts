@@ -22,7 +22,7 @@ export interface ExhcnageRatesFilter {
 @responsesAll({ 200: { description: 'success' }, 400: { description: 'bad request' } })
 
 
-@tagsAll(['Currency'])
+@tagsAll(['Exchange Rate'])
 export default class ExchangeRateController {
 
   @request('get', '/exchanges')

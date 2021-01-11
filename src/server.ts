@@ -9,7 +9,7 @@ import 'reflect-metadata';
 import { logger } from './logger';
 import { config } from './config';
 import routes from './routes';
-
+import swagger from './controller/swagger';
 import { cron } from './crons/cron';
 
 createConnection({
@@ -27,6 +27,7 @@ createConnection({
   app.use(cors());
   app.use(logger(winston));
   app.use(bodyParser());
+  app.use(swagger.routes());
   app.use(routes.routes());
   cron.start();
   app.listen(config.port);
