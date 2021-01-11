@@ -1,13 +1,23 @@
 version: '3.1'
 services :
+  backend:
+    links:
+    - "db:db"
+    depends_on:
+    - db 
+    build: .
+    environment:
+      - DATABASE_URL=postgres://orion:orion@db/orion
+    ports:
+      - "3000:3000"
   db:
     image: postgres:10-alpine
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: apidb
+      POSTGRES_USER: orion
+      POSTGRES_PASSWORD: orion
+      POSTGRES_DB: orion
   admin:
     image: adminer
     restart: always
