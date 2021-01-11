@@ -36,7 +36,8 @@ export default class UserController {
       ctx.body = 'Currency does not exists';
       return;
     }
-    wallet.currency = currency.token;
+
+    wallet.currency = currency;
 
     const errors: ValidationError[] = await validate(wallet);
 

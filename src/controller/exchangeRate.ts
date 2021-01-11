@@ -13,7 +13,6 @@ export interface ExhcnageRatesFilter {
   };
   order?: {};
   take?: number;
-
 }
 
 @responsesAll({ 200: { description: 'success' }, 400: { description: 'bad request' } })

@@ -1,7 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, OneToOne, JoinColumn } from 'typeorm';
-import { Length, IsNumber } from 'class-validator';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Currency } from './currency';
-// import { currency } from 'src/controller';
 @Entity()
 export class Wallet {
   @PrimaryGeneratedColumn()
@@ -13,14 +11,9 @@ export class Wallet {
   @Column('boolean', { default: false })
   archived: boolean;
 
-  @Column({
-    length: 100
-  })
-
-  // @ManyToOne(() => Currency, currency => currency.token)
-  // @JoinColumn()
-  @Column()
-  currency: string
+  @ManyToOne(() => Currency, { eager: true })
+  @JoinColumn()
+  currency: Currency;
 
   @Column('float', { default: 0 })
   balance: number;
