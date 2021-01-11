@@ -22,6 +22,7 @@ export default class ExchangeRateController {
   @query({
     tokenFrom: { type: 'number', description: 'token from' },
     tokenTo: { type: 'number', description: 'token to' },
+    latest: { type: 'boolean', description: 'latest price' },
   })
   public static async getExchangeRates(ctx: BaseContext): Promise<void> {
 
