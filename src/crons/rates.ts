@@ -78,8 +78,11 @@ const subscribeBinanceRates = ({ updateTime }: inputParams) => {
       await delay();
 
       const exchangeRate: ExchangeRate = new ExchangeRate();
-      exchangeRate.tokenFrom = pairs[updatedKey].ids[0];
-      exchangeRate.tokenTo = pairs[updatedKey].ids[1];
+      const tokenFrom: Currency = await currencyRepository.findOne({ where: { id: pairs[updatedKey].ids[0] } });
+      const tokenTo: Currency = await currencyRepository.findOne({ where: { id: pairs[updatedKey].ids[1] } });
+
+      exchangeRate.tokenFrom = tokenFrom;
+      exchangeRate.tokenTo = tokenTo;
       exchangeRate.price = parseFloat(updatedObj[updatedKey]);
       await exchangeRateRepository.save(exchangeRate);
     }

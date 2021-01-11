@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from 'typeorm';
 import { Length } from 'class-validator';
 import { Currency } from './currency';
 
@@ -7,13 +7,12 @@ export class ExchangeRate {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => Currency)
-  @PrimaryColumn({ type: 'int', name: 'tokenTo_id' })
-  tokenFrom: number;
+  @ManyToOne(() => Currency, { eager: true })
+  @JoinColumn()
+  tokenFrom: Currency;
 
-  @OneToOne(() => Currency)
-  @PrimaryColumn({ type: 'int', name: 'tokenFrom_id' })
-  tokenTo: number;
+  @ManyToOne(() => Currency, { eager: true })
+  tokenTo: Currency;
 
   @Column('float', { default: 0 })
   price: number;

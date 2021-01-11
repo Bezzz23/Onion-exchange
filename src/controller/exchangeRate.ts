@@ -7,16 +7,13 @@ import { Currency } from '../entity/currency';
 
 
 export interface ExhcnageRatesFilter {
-  where?: [{
-    tokenFrom?: number;
-    tokenTo?: number;
-  }];
-  tokenFrom?: number;
-  tokenTo?: number;
-  take?: number;
-  order?: {
-    id: string;
+  where?: {
+    tokenFrom?: { id: number };
+    tokenTo?: { id: number };
   };
+  order?: {};
+  take?: number;
+
 }
 
 @responsesAll({ 200: { description: 'success' }, 400: { description: 'bad request' } })
@@ -54,7 +51,15 @@ export default class ExchangeRateController {
         return;
       }
 
-      filter.where = [{ tokenFrom, tokenTo }];
+      filter.where = {
+        tokenFrom: {
+          id: tokenFromExist.id
+        },
+        tokenTo: {
+          id: tokenToExist.id
+        }
+      };
+
       filter.order = {
         id: 'DESC'
       };
@@ -67,7 +72,6 @@ export default class ExchangeRateController {
 
     const exchangeRateRepository: Repository<ExchangeRate> = getManager().getRepository(ExchangeRate);
     const exchangeRates: ExchangeRate[] = await exchangeRateRepository.find(filter);
-
     ctx.status = 200;
     ctx.body = exchangeRates;
   }
@@ -97,8 +101,8 @@ export default class ExchangeRateController {
       return;
     }
 
-    exchangeRate.tokenFrom = tokenFromParam;
-    exchangeRate.tokenTo = tokenToParam;
+    exchangeRate.tokenFrom = tokenFrom;
+    exchangeRate.tokenTo = tokenTo;
 
     const errors: ValidationError[] = await validate(exchangeRate);
 
