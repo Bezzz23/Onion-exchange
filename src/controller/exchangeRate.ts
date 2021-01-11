@@ -7,8 +7,16 @@ import { Currency } from '../entity/currency';
 
 
 export interface ExhcnageRatesFilter {
+  where?: [{
+    tokenFrom?: number;
+    tokenTo?: number;
+  }];
   tokenFrom?: number;
   tokenTo?: number;
+  take?: number;
+  order?: {
+    id: string;
+  };
 }
 
 @responsesAll({ 200: { description: 'success' }, 400: { description: 'bad request' } })
@@ -26,7 +34,7 @@ export default class ExchangeRateController {
   })
   public static async getExchangeRates(ctx: BaseContext): Promise<void> {
 
-    const { tokenFrom, tokenTo } = ctx.query;
+    const { tokenFrom, tokenTo, latest } = ctx.query;
     const currencyRepository: Repository<Currency> = getManager().getRepository(Currency);
 
     const filter: ExhcnageRatesFilter = {};
@@ -46,8 +54,15 @@ export default class ExchangeRateController {
         return;
       }
 
-      filter.tokenFrom = tokenFrom;
-      filter.tokenTo = tokenTo;
+      filter.where = [{ tokenFrom, tokenTo }];
+      filter.order = {
+        id: 'DESC'
+      };
+
+      if (latest) {
+        filter.take = 1;
+
+      }
     }
 
     const exchangeRateRepository: Repository<ExchangeRate> = getManager().getRepository(ExchangeRate);
