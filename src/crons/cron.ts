@@ -1,6 +1,5 @@
 import { CronJob } from 'cron';
 import getBalanceByAddress from './balance';
-import { BinanceWebsocketClient } from './websocketClient';
 import { subscribeBinanceRates } from './rates';
 
 const fifteenSeconds = '*/15 * * * * *';
@@ -10,7 +9,7 @@ subscribeBinanceRates({
 });
 
 const cron = new CronJob(fifteenSeconds, async () => {
-  // await getBalanceByAddress();
+  await getBalanceByAddress();
   console.error('Balances received');
 });
 

@@ -1,8 +1,9 @@
 import Web3 from 'web3';
 import { getManager, Repository } from 'typeorm';
 import { Wallet } from '../entity/wallet';
+import { config } from '../config';
 
-const web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/e75916500a094970b9851d37c3c198ad'));
+const web3 = new Web3(new Web3.providers.HttpProvider(config.infuraEndpoint));
 
 
 const getETHBalanceAndUpdate = async (wallet: Wallet) => {

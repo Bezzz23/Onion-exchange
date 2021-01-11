@@ -2,6 +2,7 @@ import { getManager, Repository } from 'typeorm';
 import { BinanceWebsocketClient } from './websocketClient';
 import { Currency } from '../entity/currency';
 import { ExchangeRate } from '../entity/exchangeRate';
+import { config } from '../config';
 
 let binanceInteval: ReturnType<typeof setTimeout>;
 
@@ -28,7 +29,7 @@ type inputParams = {
 }
 
 const subscribeBinanceRates = ({ updateTime }: inputParams) => {
-  const wsClient = new BinanceWebsocketClient('wss://stream.binance.com:9443/ws');
+  const wsClient = new BinanceWebsocketClient(config.binanceEndpoint);
 
   const updateMarketExchanges = async () => {
     let updateIndex = 1;
