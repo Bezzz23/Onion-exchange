@@ -2,7 +2,6 @@
 
 ## Getting started
 
----
 
 Install dependencies
 
@@ -37,13 +36,10 @@ docker-compose up
 
 ## Api Docs
 
----
 
 API Docs located at `[/api/docs](http://localhost:3000/api/docs)` 
 API docs automatically generated with koa-swagger-decorator
 
 ## Environment
-
----
 
 Create a .env file (or just rename the .example.env) containing all the env variables you want to set
