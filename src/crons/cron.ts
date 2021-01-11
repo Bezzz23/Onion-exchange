@@ -4,7 +4,7 @@ import getBalanceByAddress from './balance';
 const fifteenSeconds = '*/15 * * * * *';
 
 const cron = new CronJob(fifteenSeconds, async () => {
-  await getBalanceByAddress();
+  // await getBalanceByAddress();
   console.error('Balances received');
 });
 
