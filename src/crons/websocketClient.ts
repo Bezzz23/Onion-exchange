@@ -16,6 +16,10 @@ export class BinanceWebsocketClient {
   sendMessage(msg: {}) {
     this.client.send(JSON.stringify(msg));
   }
+
+  close() {
+    this.client.close();
+  }
 }
 
 

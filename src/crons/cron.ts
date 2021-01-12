@@ -1,12 +1,11 @@
 import { CronJob } from 'cron';
 import getBalanceByAddress from './balance';
-import { subscribeBinanceRates } from './rates';
+import BinanceRates from './rates';
 
+const binanceRates = new BinanceRates(15000, 10000);
 const fifteenSeconds = '*/15 * * * * *';
 
-subscribeBinanceRates({
-  updateTime: 15000
-});
+binanceRates.subscribe();
 
 const cron = new CronJob(fifteenSeconds, async () => {
   await getBalanceByAddress();

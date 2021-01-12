@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from 'typeorm';
-import { Length } from 'class-validator';
 import { Currency } from './currency';
 
 @Entity()
